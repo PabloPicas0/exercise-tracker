@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+}
+
+.sub-title {
+  margin-top: 0px;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0px auto;
+}
+
+.card {
+  margin: 30px 5px;
+  padding: 10px 20px;
+  border: 1px solid black;
+}
+
+.form-elements {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px 5px;
+}
+
+.form-buttons {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 2px 0px;
+}
