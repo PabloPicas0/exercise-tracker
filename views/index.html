@@ -16,34 +16,38 @@
     <div class="container">
       <form class="card" action="/api/users" method="post">
         <h3 class="sub-title">Create a New User</h3>
-        <p>
-          <code>POST /api/users</code>
-        </p>
-        <input class="form-elements" type="text" id="urname" name="username" placeholder="username" />
+        <code>POST /api/users</code>
+        <input class="form-elements" type="text" id="urname" name="username" placeholder="Username" />
         <button class="form-buttons" type="submit">Submit</button>
       </form>
 
       <form class="card" action="" method="post">
         <h3 class="sub-title">Add exercises</h3>
-        <p>
-          <code>POST /api/users/:_id/exercises</code>
-        </p>
+        <code>POST /api/users/:_id/exercises</code>
         <input class="form-elements" type="text" name=":_id" id="uid" placeholder=":_id" />
         <input
           class="form-elements"
           type="text"
           name="description"
           id="description"
-          placeholder="description" />
+          placeholder="Description" />
         <input
           class="form-elements"
           type="text"
           name="duration"
           id="duration"
-          placeholder="duration (mins)" />
-        <input class="form-elements" type="text" name="date" id="date" placeholder="date (yyyy-mm-dd)" />
+          placeholder="Duration (mins)" />
+        <input class="form-elements" type="text" name="date" id="date" placeholder="Date (yyyy-mm-dd)" />
         <button class="form-buttons" type="submit">Submit</button>
       </form>
+
+      <div class="card">
+        <h3>GET user's exercise log:</h3>
+        <code>GET /api/users/:_id/logs?[from][&to][&limit]</code>
+        <code>[ ] = optional</code>
+        <code>from, to = dates (yyyy-mm-dd)</code>
+        <code>limit = number</code>
+      </div>
     </div>
   </body>
 </html>
