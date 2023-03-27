@@ -21,24 +21,24 @@
         <button class="form-buttons" type="submit">Submit</button>
       </form>
 
-      <form class="card" action="" method="post">
+      <form class="card" method="post">
         <h3 class="sub-title">Add exercises</h3>
-        <code>POST /api/users/:_id/exercises</code>
-        <input class="form-elements" type="text" name=":_id" id="uid" placeholder=":_id" />
+        <code>POST /api/users/:id/exercises</code>
+        <input class="form-elements" type="text" name="id" id="uid" placeholder=":id" required />
         <input
           class="form-elements"
           type="text"
           name="description"
           id="description"
-          placeholder="Description" 
-          required/>
+          placeholder="Description"
+          required />
         <input
           class="form-elements"
-          type="text"
+          type="number"
           name="duration"
           id="duration"
-          placeholder="Duration (mins)" 
-          required/>
+          placeholder="Duration (mins)"
+          required />
         <input class="form-elements" type="text" name="date" id="date" placeholder="Date (yyyy-mm-dd)" />
         <button class="form-buttons" type="submit">Submit</button>
       </form>

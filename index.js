@@ -46,8 +46,37 @@ app.post("/api/users", (req, res) => {
     });
 });
 
-app.post("/api/users/:_id/exercises", (req, res) => {
-  const { _id } = req.params;
+app.post("/", (req, res) => {
+  const { id, description, duration, date } = req.body;
+  const exercisesObj = {
+    description: description,
+    duration: Number(duration),
+    date: date || new Date().toDateString(),
+  };
+
+  userModel.findByIdAndUpdate(id, { log: [exercisesObj] }).then((doc) => {
+    return res.redirect(`/api/users/${id}/exercises`);
+  });
+});
+
+app.get("/api/users/:id/exercises", (req, res) => {
+  const { id } = req.params;
+
+  userModel.findById(id).then((doc) => {
+    if (!doc) {
+      return res.json("User doesn't exists");
+    } else {
+      const { description, duration, date } = doc.log[0];
+
+      return res.json({
+        username: doc.username,
+        description: description,
+        duration: duration,
+        date: date,
+        _id: doc._id,
+      });
+    }
+  });
 });
 
 app.get("/api/users", (req, res) => {
