@@ -48,36 +48,35 @@ app.post("/api/users", (req, res) => {
 
 app.post("/", (req, res) => {
   const { id, description, duration, date } = req.body;
+  const dateRegex = /\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/g;
+  const validatedDate = !dateRegex.test(date) ? new Date().toDateString() : date;
+
   const exercisesObj = {
     description: description,
     duration: Number(duration),
-    date: date || new Date().toDateString(),
+    date: validatedDate,
   };
-
-  userModel.findByIdAndUpdate(id, { log: [exercisesObj] }).then((doc) => {
-    return res.redirect(`/api/users/${id}/exercises`);
-  });
 });
 
-app.get("/api/users/:id/exercises", (req, res) => {
-  const { id } = req.params;
+// app.get("/api/users/:id/exercises", (req, res) => {
+//   const { id } = req.params;
 
-  userModel.findById(id).then((doc) => {
-    if (!doc) {
-      return res.json("User doesn't exists");
-    } else {
-      const { description, duration, date } = doc.log[0];
+//   userModel.findById(id).then((doc) => {
+//     if (!doc) {
+//       return res.json("User doesn't exists");
+//     } else {
+//       const { description, duration, date } = doc.log[0];
 
-      return res.json({
-        username: doc.username,
-        description: description,
-        duration: duration,
-        date: date,
-        _id: doc._id,
-      });
-    }
-  });
-});
+//       return res.json({
+//         username: doc.username,
+//         description: description,
+//         duration: duration,
+//         date: date,
+//         _id: doc._id,
+//       });
+//     }
+//   });
+// });
 
 app.get("/api/users", (req, res) => {
   userModel.find({}).then((docs) => {
