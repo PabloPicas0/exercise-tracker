@@ -36,16 +36,16 @@ code {
 .container {
   max-width: 600px;
   margin: 0px auto;
+  position: relative;
 }
 
 .card {
-  position: relative;
   margin: 30px 5px;
   padding: 10px 20px;
   border: 1px solid gold;
 }
 
-.card:hover::before {
+.container:hover::before {
   content: "";
   position: absolute;
   top: -10px;
@@ -58,7 +58,7 @@ code {
   border-radius: 10px;
 }
 
-.card:hover::after {
+.container:hover::after {
   content: "";
   position: absolute;
   top: -10px;
