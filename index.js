@@ -30,33 +30,55 @@ app.use(cors());
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/views/index.html");
-});
-
-app.post("/api/users", (req, res) => {
-  const { username } = req.body;
-
-  new userModel({
-    username: username,
+app
+  .route("/")
+  .get((req, res) => {
+    res.sendFile(__dirname + "/views/index.html");
   })
-    .save()
-    .then((doc) => {
-      res.json({ username: doc.username, _id: doc._id });
+  .post((req, res) => {
+    const { id, description, duration, date } = req.body;
+    const dateRegex = /\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/g;
+    const validatedDate = !dateRegex.test(date) ? new Date().toDateString() : date;
+
+    const exercisesObj = {
+      description: description,
+      duration: Number(duration),
+      date: validatedDate,
+    };
+
+    console.log(id, description, duration, validatedDate, " On post route");
+    console.log(
+      userModel.find({ _id: id }).then((doc) => {
+        console.log(doc);
+      })
+    );
+
+    // console.log(mongoose.Types.ObjectId.isValid(id)) //Possible fix
+    //The problem is that your userModel never returns null becouse he assumes that no matter what you searching in the end there mus be array
+  });
+
+app
+  .route("/api/users")
+  .post((req, res) => {
+    const { username } = req.body;
+
+    new userModel({
+      username: username,
+    })
+      .save()
+      .then((doc) => {
+        res.json({ username: doc.username, _id: doc._id });
+      });
+  })
+  .get((req, res) => {
+    userModel.find({}).then((docs) => {
+      res.json(
+        docs.map((element) => {
+          return { username: element.username, _id: element._id };
+        })
+      );
     });
-});
-
-app.post("/", (req, res) => {
-  const { id, description, duration, date } = req.body;
-  const dateRegex = /\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/g;
-  const validatedDate = !dateRegex.test(date) ? new Date().toDateString() : date;
-
-  const exercisesObj = {
-    description: description,
-    duration: Number(duration),
-    date: validatedDate,
-  };
-});
+  });
 
 // app.get("/api/users/:id/exercises", (req, res) => {
 //   const { id } = req.params;
@@ -77,16 +99,6 @@ app.post("/", (req, res) => {
 //     }
 //   });
 // });
-
-app.get("/api/users", (req, res) => {
-  userModel.find({}).then((docs) => {
-    res.json(
-      docs.map((element) => {
-        return { username: element.username, _id: element._id };
-      })
-    );
-  });
-});
 
 const port = process.env.PORT || 3000;
 const listener = app.listen(port, () => {

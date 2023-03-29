@@ -53,6 +53,7 @@ code {
   right: -10px;
   bottom: -10px;
   border: 2px solid gold;
+  pointer-events: none;
   transition: all 0.5s;
   animation: borderAnimation 3s infinite ease-in-out;
   border-radius: 10px;
@@ -66,6 +67,7 @@ code {
   right: -10px;
   bottom: -10px;
   border: 2px solid gold;
+  pointer-events: none;
   transition: all 0.5s;
   animation: borderAnimation 3s infinite -1.5s ease-in-out;
   border-radius: 10px;

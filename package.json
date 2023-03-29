@@ -14,6 +14,10 @@
     "mongoose": "^7.0.3",
     "cors": "^2.8.5"
   },
+  "nodemonConfig": {
+    "delay": 2500,
+    "verbose": true
+  },
   "devDependencies": {
     "nodemon": "^2.0.22"
   },
