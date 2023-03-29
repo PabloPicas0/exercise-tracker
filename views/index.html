@@ -21,7 +21,7 @@
         <button class="form-buttons" type="submit">Submit</button>
       </form>
 
-      <form class="card" method="post">
+      <form class="card" id="exercise-form" action="" method="post">
         <h3 class="sub-title">Add exercises</h3>
         <code>POST /api/users/:id/exercises</code>
         <input class="form-elements" type="text" name="id" id="uid" placeholder=":id" required />
@@ -51,5 +51,16 @@
         <code>limit = number</code>
       </div>
     </div>
+
+    <script>
+      const form = document.getElementById("exercise-form")
+
+      form.addEventListener("submit", () => {
+        const userID = document.getElementById("uid").value
+        form.action = `/api/users/${userID}/exercises`
+        
+        form.submit()
+      })
+    </script>
   </body>
 </html>
