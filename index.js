@@ -70,24 +70,32 @@ app.post("/api/users/:id/exercises", (req, res) => {
     date: validatedDate,
   };
 
-  userModel.findByIdAndUpdate(id, { $push: { log: exercisesObj } }, { new: true }).then((doc) => {
-    const resJSON = {
-      username: doc.username,
-      _id: id,
-      description: description,
-      duration: duration,
-      date: validatedDate
-    }
+  // We want to search db only when the user enter some kind of valid id
+  // If he don't do that we dont even bother
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    userModel
+      .findByIdAndUpdate(id, { $push: { log: exercisesObj } }, { new: true })
+      .then((doc) => {
+        if (!doc) {
+          return res.json({ error: "User not found" });
+        }
 
-    if (!doc) {
-      res.json({ error: "User not found" });
-    } else {
-      res.json(resJSON)
-    }
-  });
+        const resObj = {
+          username: doc.username,
+          _id: id,
+          description: description,
+          duration: duration,
+          date: validatedDate,
+        };
 
-  // console.log(mongoose.Types.ObjectId.isValid(id)) //Possible fix
-  //The problem is that your userModel never returns null becouse he assumes that no matter what you searching in the end there mus be array
+        return res.json(resObj);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    return res.json({ error: "Invalid id" });
+  }
 });
 
 const port = process.env.PORT || 3000;
