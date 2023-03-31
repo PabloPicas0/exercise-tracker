@@ -53,13 +53,13 @@
     </div>
 
     <script>
-      const form = document.getElementById("exercise-form")
+      const exerciseForm = document.getElementById("exercise-form")
 
-      form.addEventListener("submit", () => {
+      exerciseForm.addEventListener("submit", () => {
         const userID = document.getElementById("uid").value
-        form.action = `/api/users/${userID}/exercises`
+        exerciseForm.action = `/api/users/${userID}/exercises`
         
-        form.submit()
+        exerciseForm.submit()
       })
     </script>
   </body>

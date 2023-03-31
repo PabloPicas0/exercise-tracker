@@ -98,6 +98,36 @@ app.post("/api/users/:id/exercises", (req, res) => {
   }
 });
 
+app.get("/api/users/:_id/logs", (req, res) => {
+  const { _id } = req.params;
+
+  if (mongoose.Types.ObjectId.isValid(_id)) {
+    userModel
+      .findById(_id)
+      .then((doc) => {
+        if (!doc) {
+          res.json({ error: "User not found" });
+        }
+
+        const { _id, username, log } = doc;
+
+        const logResponse = {
+          username: username,
+          _id: _id.toString(),
+          count: log.length,
+          log: log,
+        };
+
+        res.json(logResponse);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    res.json({ error: "Cannot GET - invalid ID" });
+  }
+});
+
 const port = process.env.PORT || 3000;
 const listener = app.listen(port, () => {
   console.log(`Your app is listening to localhost:${listener.address().port}`);
