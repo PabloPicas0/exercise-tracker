@@ -100,6 +100,7 @@ app.post("/api/users/:id/exercises", (req, res) => {
 
 app.get("/api/users/:_id/logs", (req, res) => {
   const { _id } = req.params;
+  const { from, to, limit } = req.query;
 
   if (mongoose.Types.ObjectId.isValid(_id)) {
     userModel
@@ -111,11 +112,34 @@ app.get("/api/users/:_id/logs", (req, res) => {
 
         const { _id, username, log } = doc;
 
+        const filterByDates = log.filter((item) => {
+          // Time offset is needed to have constant miliseconds
+          const timeOffset = " 00:00:00"
+          const itemDate = new Date(item.date + timeOffset).getTime();
+          const fromDate = new Date(from + timeOffset).getTime();
+          const toDate = new Date(to + timeOffset).getTime();
+
+          if (fromDate && toDate) {
+            return itemDate >= fromDate && itemDate <= toDate;
+          }
+          if (fromDate && !toDate) {
+            return itemDate >= fromDate;
+          }
+          if (!fromDate && toDate) {
+            return itemDate <= toDate;
+          }
+          if(!fromDate && !toDate) {
+            return itemDate
+          }
+        });
+
+        const filterByNumber = limit !== undefined ? filterByDates.slice(0, Number(limit)) : null
+
         const logResponse = {
           username: username,
           _id: _id.toString(),
           count: log.length,
-          log: log,
+          log: filterByNumber || filterByDates,
         };
 
         res.json(logResponse);
