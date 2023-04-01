@@ -114,7 +114,7 @@ app.get("/api/users/:_id/logs", (req, res) => {
 
         const filterByDates = log.filter((item) => {
           // Time offset is needed to have constant miliseconds
-          const timeOffset = " 00:00:00"
+          const timeOffset = " 00:00:00";
           const itemDate = new Date(item.date + timeOffset).getTime();
           const fromDate = new Date(from + timeOffset).getTime();
           const toDate = new Date(to + timeOffset).getTime();
@@ -128,17 +128,17 @@ app.get("/api/users/:_id/logs", (req, res) => {
           if (!fromDate && toDate) {
             return itemDate <= toDate;
           }
-          if(!fromDate && !toDate) {
-            return itemDate
+          if (!fromDate && !toDate) {
+            return itemDate;
           }
         });
 
-        const filterByNumber = limit !== undefined ? filterByDates.slice(0, Number(limit)) : null
+        const filterByNumber = limit !== undefined ? filterByDates.slice(0, Number(limit)) : null;
 
         const logResponse = {
           username: username,
           _id: _id.toString(),
-          count: log.length,
+          count: filterByNumber.length || filterByDates.length,
           log: filterByNumber || filterByDates,
         };
 
