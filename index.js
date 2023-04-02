@@ -82,10 +82,10 @@ app.post("/api/users/:id/exercises", (req, res) => {
 
         const resObj = {
           username: doc.username,
-          _id: id,
           description: description,
           duration: Number(duration),
           date: validatedDate,
+          _id: id,
         };
 
         return res.json(resObj);
