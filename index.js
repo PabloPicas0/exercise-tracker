@@ -84,7 +84,7 @@ app.post("/api/users/:id/exercises", (req, res) => {
           username: doc.username,
           _id: id,
           description: description,
-          duration: duration,
+          duration: Number(duration),
           date: validatedDate,
         };
 
@@ -138,7 +138,7 @@ app.get("/api/users/:_id/logs", (req, res) => {
         const logResponse = {
           username: username,
           _id: _id.toString(),
-          count: filterByNumber.length || filterByDates.length,
+          count: log.length,
           log: filterByNumber || filterByDates,
         };
 
