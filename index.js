@@ -62,7 +62,7 @@ app.post("/api/users/:id/exercises", (req, res) => {
   const { description, duration, date } = req.body;
 
   const dateRegex = /\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/g;
-  const validatedDate = !dateRegex.test(date) ? new Date().toDateString() : date;
+  const validatedDate = !dateRegex.test(date) ? new Date().toDateString() : new Date(date).toDateString();
 
   const exercisesObj = {
     description: description,
