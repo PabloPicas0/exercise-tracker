@@ -1,4 +1,4 @@
-# URL Shortener Microservice
+# Exercise Tracker
 
 A simple exercise tracker that allows to create a new user and add exiercises.
 
